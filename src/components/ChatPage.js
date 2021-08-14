@@ -41,11 +41,11 @@ export default function ChatPage() {
   const [onlineNumbers, userData] = GetOnlineNumber(selectedRoom);
   
   const createRoom = () => {
-    if(createRoomName.length  && !roomNames.filter(({id}) => id === .toLower(createRoomName)).length)   {
+    if(createRoomName.length  && !roomNames.filter(({id}) => id === _.toLower(createRoomName)).length)   {
       setDataToDatabase(
         username,
         'Odayı oluşturdu.',
-        .toLower(createRoomName),
+        _.toLower(createRoomName),
         );
       }
       setCreateRoomName('');
