@@ -13,18 +13,26 @@ export default function List({
   handler,
   link,
   children,
+  ...props
 }) {
   return (
-    <Flex pointerEvents={link ? 'default' : 'none'} px="45px" width="330px" flexDirection="column" flexGrow="1">
+    <Flex
+      pointerEvents={link ? 'default' : 'none'}
+      px="45px"
+      width="330px"
+      flexDirection="column"
+      flexGrow="1"
+      {...props}
+    >
       <Flex alignItems="center">
         <Text fontSize="title">{title}</Text>
         {showIcon && (
           <Flex ml="auto" alignItems="center">
             <Input
-                          _focus={{
-                            borderColor: 'purple',
-                            boxShadow: '0 0 0 1px purple_53',
-                          }}
+              _focus={{
+                borderColor: 'purple',
+                boxShadow: '0 0 0 1px purple_53',
+              }}
               value={value}
               onChange={onChange}
               placeholder="Create a room"
@@ -37,7 +45,9 @@ export default function List({
           </Flex>
         )}
       </Flex>
-      <Flex flexDirection="column" mt="20px">{children}</Flex>
+      <Flex flexDirection="column" mt="20px">
+        {children}
+      </Flex>
     </Flex>
   );
 }

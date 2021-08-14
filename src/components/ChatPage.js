@@ -19,13 +19,14 @@ import TopSection from './TopSection';
 import List from './List';
 import ListItem from './ListItem';
 import { Flex, Text } from '@chakra-ui/react';
-import Moment from "moment"
-
+import Moment from 'moment';
 
 export default function ChatPage() {
   // Username from Login Page ( Main Page )
   const location = useLocation();
-  const [username] = useState(location.state ? location.state.username : "Anonim" );
+  const [username] = useState(
+    location.state ? location.state.username : 'Anonim'
+  );
 
   let date = Moment(new Date()).format('DD/MM/YYYY HH:mm:ss');
 
@@ -37,21 +38,24 @@ export default function ChatPage() {
 
   // Click on Rooms - Shows chats.
   const [selectedRoom, setSelectedRoom] = useState('');
-  
+
   const [onlineNumbers, userData] = GetOnlineNumber(selectedRoom);
-  
+
   const createRoom = () => {
-    if(createRoomName.length  && !roomNames.filter(({id}) => id === _.toLower(createRoomName)).length)   {
+    if (
+      createRoomName.length &&
+      !roomNames.filter(({ id }) => id === _.toLower(createRoomName)).length
+    ) {
       setDataToDatabase(
         username,
         'Odayı oluşturdu.',
-        _.toLower(createRoomName),
-        );
-      }
-      setCreateRoomName('');
-    };
-    
-    const [roomNames] = GetRoomNames([createRoom]);
+        _.toLower(createRoomName)
+      );
+    }
+    setCreateRoomName('');
+  };
+
+  const [roomNames] = GetRoomNames([createRoom]);
 
   const selectRoom = (roomId) => {
     setSelectedRoom(roomId);
@@ -67,7 +71,6 @@ export default function ChatPage() {
   };
 
   const [data] = GetData(selectedRoom);
-  
 
   const handleSendData = () => {
     message.length && setDataToDatabase(username, message, selectedRoom);
@@ -75,12 +78,13 @@ export default function ChatPage() {
     setMessage('');
   };
 
- UsePresence();
+  UsePresence();
   return (
     <Flex flexDir="column">
       <TopSection name={username} />
       <Flex mt="20px">
         <List
+          display={{ base: 'none', md: 'block' }}
           title="Chat Rooms"
           showIcon
           onChange={(e) => setCreateRoomName(e.target.value)}
@@ -115,15 +119,18 @@ export default function ChatPage() {
         >
           {data.length ? (
             data.map(({ id, name, message, time }) => (
-              <TextBox key={id} user={name + "      "+ time} text={message} />
+              <TextBox key={id} user={name + '      ' + time} text={message} />
             ))
           ) : (
             <Text textAlign="center">Lütfen odalardan birini seçiniz!</Text>
           )}
         </Chat>
-        <List title={`Members ${userData.length ? userData.length : ""}`}>
-          {userData.length ?
-            userData.map(({id, username }) => (
+        <List
+          display={{ base: 'none', xl: 'block' }}
+          title={`Members ${userData.length ? userData.length : ''}`}
+        >
+          {userData.length ? (
+            userData.map(({ id, username }) => (
               <ListItem
                 key={id}
                 showAddIcon
@@ -131,7 +138,10 @@ export default function ChatPage() {
                 subtitle="Kodluyoruz"
                 name={username}
               />
-            )) : <div></div>}
+            ))
+          ) : (
+            <div></div>
+          )}
         </List>
       </Flex>
     </Flex>
