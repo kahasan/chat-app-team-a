@@ -37,20 +37,21 @@ export default function ChatPage() {
 
   // Click on Rooms - Shows chats.
   const [selectedRoom, setSelectedRoom] = useState('');
-  const [roomNames] = GetRoomNames([createRoomName]);
-
+  
   const [onlineNumbers, userData] = GetOnlineNumber(selectedRoom);
-
+  
   const createRoom = () => {
-    if(createRoomName.length)   {
+    if(createRoomName.length  && !roomNames.filter(({id}) => id === .toLower(createRoomName)).length)   {
       setDataToDatabase(
         username,
         'Odayı oluşturdu.',
-        _.toLower(createRoomName)
-      );
-    }
-    setCreateRoomName('');
-  };
+        .toLower(createRoomName),
+        );
+      }
+      setCreateRoomName('');
+    };
+    
+    const [roomNames] = GetRoomNames([createRoom]);
 
   const selectRoom = (roomId) => {
     setSelectedRoom(roomId);

@@ -87,7 +87,7 @@ const LoginPage = () => {
                 }}
                 />
               </FormControl>
-              <Button type="submit" backgroundColor="purple_53" color="#fff" size="lg" fontSize="md">
+              <Button type="submit" backgroundColor="purple" color="#fff" size="lg" fontSize="md">
                 Sign in
               </Button>
             </Stack>
