@@ -19,12 +19,15 @@ import TopSection from './TopSection';
 import List from './List';
 import ListItem from './ListItem';
 import { Flex, Text } from '@chakra-ui/react';
+import Moment from "moment"
 
 
 export default function ChatPage() {
   // Username from Login Page ( Main Page )
   const location = useLocation();
   const [username] = useState(location.state ? location.state.username : "Anonim" );
+
+  let date = Moment(new Date()).format('DD/MM/YYYY HH:mm:ss');
 
   // Chat Text Area - Input
   const [message, setMessage] = useState('');
@@ -85,12 +88,11 @@ export default function ChatPage() {
           link
         >
           {roomNames.length ? (
-            roomNames.map(({ id, roomName }) => (
+            roomNames.map(({ id, roomName, date }) => (
               <ListItem
-                key={id}
                 showPeopleCount
                 title={roomName}
-                subtitle={'12.03.2021 15:45'}
+                subtitle={date}
                 handler={() => selectRoom(id)}
                 roomName={roomName}
                 username={username}
@@ -111,8 +113,8 @@ export default function ChatPage() {
           onChange={(e) => setMessage(e.target.value)}
         >
           {data.length ? (
-            data.map(({ id, name, message }) => (
-              <TextBox key={id} user={name} text={message} />
+            data.map(({ id, name, message, time }) => (
+              <TextBox key={id} user={name + "      "+ time} text={message} />
             ))
           ) : (
             <Text textAlign="center">Lütfen odalardan birini seçiniz!</Text>

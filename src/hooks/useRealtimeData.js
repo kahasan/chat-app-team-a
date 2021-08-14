@@ -5,6 +5,8 @@ import _ from "lodash";
 import Chat from "../models/Chat";
 import Room from "../models/Rooms";
 import User from "../models/Users"
+import Moment from "moment"
+
 
 
 export const GetRoomNames = (deps = []) => {
@@ -42,9 +44,10 @@ export const GetData = (roomName) => {
         const posts = snapshot.val();
         const loadedPosts = [];
         for (const key in posts) {
-          loadedPosts.push(new Chat(key, posts[key].name, posts[key].message));
+          loadedPosts.push(new Chat(key, posts[key].name, posts[key].message, posts[key].lastTime));
         }
         setData(loadedPosts);
+        console.log("loadedPosts", loadedPosts)
       });
     }
     roomName.length && fetchData();
@@ -63,7 +66,7 @@ export const setDataToDatabase = (name, message, roomName) => {
     firebase.database().ref(`rooms/${roomName}`).push({
       name: name,
       message: message,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      lastTime: Moment(new Date()).format('HH:mm'),
     });
   }
 };
@@ -72,7 +75,7 @@ export const createRoomDatabase = (name, message, roomName) => {
   firebase.database().ref(`rooms/${roomName}`).push({
     name: name,
     message: message,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    lastTime: Moment(new Date()).format('HH:mm'),
   });
 };
 
